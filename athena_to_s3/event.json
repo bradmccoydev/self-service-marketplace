@@ -1,0 +1,3 @@
+{
+    "Payload": "{\"BUCKET_NAME\":\"s3://athena-query-results-bazaarvoice\",\"BRANDS_KEY\":\"csv/bvBrands.csv\",\"CATEGORIES_KEY\":\"csv/bvCategories.csv\",\"PRODUCTS_KEY\":\"csv/bvProducts.csv\",\"DATABASE\":\"whlau_daas_uat_djrms_db\",\"QUERY\":\"SELECT * from bv_brands\",\"OUTPUT_FILE_VARIABLE\":\"bvBrands\"}"
+}
