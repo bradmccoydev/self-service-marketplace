@@ -19,6 +19,7 @@ def lambda_handler(event, context):
     DATABASE = input['DATABASE']
     QUERY = input['QUERY']
     OUTPUT_FILE_VARIABLE = input['OUTPUT_FILE_VARIABLE']
+    OUTPUT_FILE_NAME = input['OUTPUT_FILE_NAME']
 
     ## Creating the Client for Athena
     client = boto3.client('athena')
@@ -68,7 +69,13 @@ def lambda_handler(event, context):
                     QueryExecutionId = queryResponse['QueryExecutionId']
                 )
                 result_data = response_query_result['ResultSet']
+                oldKey = location.replace('s3://','')
+                bucket = S3_BUCKET.replace('s3://','')
+                print(oldKey)
                 print("location: ", location)
+                s3 = boto3.resource('s3')
+                s3.Object(bucket,OUTPUT_FILE_NAME).copy_from(CopySource=oldKey)
+                s3.Object(bucket,oldKey.replace(bucket + '/','')).delete()
         time.sleep(10)
 
     payload = utilities.AddOrUpdateJsonWithValue(OUTPUT_FILE_VARIABLE, location, payload)
